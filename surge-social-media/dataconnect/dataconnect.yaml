@@ -1,12 +1,12 @@
 specVersion: "v1beta"
-serviceId: "surge-social-media"
-location: "us-central1"
+serviceId: "functions"
+location: "asia-east1"
 schema:
   source: "./schema"
   datasource:
     postgresql:
       database: "fdcdb"
       cloudSql:
-        instanceId: "surge-social-media-fdc"
+        instanceId: "functions-fdc"
       # schemaValidation: "COMPATIBLE"
 connectorDirs: ["./connector"]
