@@ -14,12 +14,16 @@
   
   /* Styling for the form container */
   .auth-container {
-    background-color: white; /* White background for the form */
-    padding: 20px 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     width: 100%;
-    max-width: 400px;
+    max-width: 800px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
   /* Rest of your existing styles */
@@ -32,6 +36,11 @@
     margin-bottom: 20px;
   }
   
+  .name-inputs {
+    display: flex;
+    gap: 5rem;
+  }
+
   .input-group {
     margin-bottom: 15px;
   }
@@ -52,7 +61,17 @@
     border-radius: 4px;
     font-size: 14px;
   }
+
+  .password-inputs {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
   
+  .password-inputs .input-group {
+    width: 48%; /* Adjust the width as needed */
+  }
+
   .auth-button {
     width: 100%;
     padding: 12px;
@@ -61,8 +80,26 @@
     border: none;
     border-radius: 4px;
     margin-bottom: 1rem;
-  }
-  
+    transition: all 0.3s ease; 
+}
+
+.auth-button:hover {
+    background-color: rgb(43, 43, 43);
+    color: white;
+}
+
+.pic{
+  position: relative;
+  margin-top: -16rem;
+  margin-left: 32rem;
+  margin-bottom: 11rem;
+}
+
+.pic input{
+  border-radius: 5rem;
+  height: 5rem;
+  width: 5rem;
+}
   .toggle-text {
     font-size: 14px;
   }
@@ -86,4 +123,33 @@
     margin-bottom: 1rem;
   }
   
+  .file-upload-button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    transition: background-color 0.3s ease;
+  }
+  
+  .file-upload-button:hover {
+    background-color: #e1e1e1;
+  }
+  
+  .file-upload-button svg {
+    color: #333;
+  }
+  
+  .input-group.pic {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .input-group.pic p {
+    margin-top: 5px;
+  }
   
