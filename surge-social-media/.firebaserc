@@ -1,5 +1,11 @@
 {
   "projects": {
     "default": "surge-social-media"
+  },
+  "targets": {},
+  "etags": {
+    "surge-social-media": {
+      "extensionInstances": {}
+    }
   }
 }

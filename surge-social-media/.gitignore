@@ -24,3 +24,5 @@ yarn-error.log*
 
 firebase-debug.log
 apphosting.local.yaml
+
+.env

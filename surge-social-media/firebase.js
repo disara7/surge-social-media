@@ -3,12 +3,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAlb7eoH8aYma-yOU-ZXizsjOqFAv4tOj8",
-    authDomain: "surge-social-media.firebaseapp.com",
-    projectId: "surge-social-media",
-    storageBucket: "surge-social-media.firebasestorage.app",
-    messagingSenderId: "957654347338",
-    appId: "1:957654347338:web:008f12db730ef2b3e700b3"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
   };
   
 
