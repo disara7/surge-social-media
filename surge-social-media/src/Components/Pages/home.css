@@ -1,6 +1,7 @@
 .home {
     display: flex;
     height: 100vh;
+    background-color: white;
   }
   
 
@@ -16,7 +17,7 @@
     flex-grow: 2;
     /* background-color: grey; */
     padding: 10px;
-    padding-top: 16rem;
+    padding-top: 30rem;
     margin-top: 1rem;
     margin-right: 20px;
     max-height: 100vh;
