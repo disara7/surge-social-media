@@ -1,8 +1,9 @@
-// firebase.js (or firebaseConfig.js)
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore"; // Import Firestore
+import { initializeApp } from "firebase/app"; // Modular SDK
+import { getAuth } from "firebase/auth"; // Auth module
+import { getFirestore } from "firebase/firestore"; // Firestore module
+import { getStorage } from "firebase/storage"; // Storage module
 
+// Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -12,10 +13,13 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
+// Initialize Firebase app
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firebase Authentication and Firestore
+// Initialize Firebase Authentication, Firestore, and Storage
 const auth = getAuth(app);
-const db = getFirestore(app); // Initialize Firestore
+const db = getFirestore(app);
+const storage = getStorage(app); // Initialize Firebase Storage
 
-export { auth, db }; // Export both auth and db
+// Export Firebase services for use in other parts of your app
+export { auth, db, storage };

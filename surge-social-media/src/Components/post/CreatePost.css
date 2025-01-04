@@ -16,18 +16,114 @@
     height: 150px;
     margin-bottom: 20px;
     padding: 10px;
-    border-color: #45a049;
+    border-color: #ff3841;
   }
   
   button {
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #ff3841;
     color: white;
     border: none;
     cursor: pointer;
   }
   
   button:hover {
-    background-color: #45a049;
+    background-color: #ff3841;
+  }
+
+  .subheading {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
   }
   
+  .file-upload-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    width: 150%;
+    height: 300px;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+  }
+  
+  .file-upload-label:hover {
+    border-color: #ff3841;
+  }
+  
+  .image-preview {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  .placeholder {
+    color: #aaa;
+    font-size: 18px;
+  }
+  
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ff3841;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #d32f2f;
+  }
+  
+  button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    opacity: 0.9;
+  }
+  
+  button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  .cancel-button {
+    background-color: #ccc;
+    color: black;
+  }
+  
+  .cancel-button:hover {
+    background-color: #bbb;
+  }
+  
+  .profileContent {
+    position: absolute; 
+    top: 0; 
+    right: 0; 
+    margin: 10px; 
+  }
