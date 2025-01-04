@@ -23,11 +23,14 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    // Append a dummy domain if the email does not contain '@'
+    const processedEmail = email.includes('@') ? email : `${email}@example.com`;
+  
     if (isLogin) {
       // Login logic
       try {
-        await signInUser(email, password);
+        await signInUser(processedEmail, password);
         setSuccessMessage("Login successful");
         navigate('/home');
       } catch (error) {
@@ -39,20 +42,20 @@ const Login = () => {
         setErrorMessage("Passwords don't match");
         return;
       }
-
+  
       try {
-        const user = await createUser(email, password);
+        const user = await createUser(processedEmail, password);
         const userData = {
-          email: email,
+          email: processedEmail,
           firstName: firstName,
           lastName: lastName,
           picture: "",
           createdAt: new Date(),
         };
-
+  
         await saveUserData(user.uid, userData);
         setSuccessMessage("User created and data saved to Firestore!");
-
+  
         // Navigate to the login form after sign-up
         setTimeout(() => {
           toggleForm();
@@ -62,6 +65,7 @@ const Login = () => {
       }
     }
   };
+  
 
   return (
     <div className="login">

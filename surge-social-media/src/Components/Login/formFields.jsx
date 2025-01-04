@@ -2,9 +2,19 @@ import React from 'react';
 import { AiOutlinePlus } from 'react-icons/ai'; // Importing the plus icon
 
 const FormFields = ({
-  isLogin, firstName, setFirstName, lastName, setLastName,
-  email, setEmail, password, setPassword, confirmPassword, setConfirmPassword, 
-  setProfilePicture, profilePicture
+  isLogin,
+  firstName,
+  setFirstName,
+  lastName,
+  setLastName,
+  email,
+  setEmail,
+  password,
+  setPassword,
+  confirmPassword,
+  setConfirmPassword,
+  setProfilePicture,
+  profilePicture
 }) => {
   return (
     <>
@@ -33,10 +43,10 @@ const FormFields = ({
         </div>
       )}
       <div className="input-group">
-        <label>Email</label>
+        <label>Email / Username</label>
         <input
-          type="email"
-          placeholder="Enter your email"
+          type="text" // Changed from 'email' to 'text'
+          placeholder="Enter your email or username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required

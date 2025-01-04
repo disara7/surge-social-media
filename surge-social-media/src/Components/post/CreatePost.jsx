@@ -3,26 +3,26 @@ import Navbar from '../Navbar/Navbar';
 import './CreatePost.css';
 import { getAuth } from 'firebase/auth';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import ProfileOverview from '../Profile/ProfileOverview';
 
 const CreatePost = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [uploadError, setUploadError] = useState(null); // Track upload errors
+  const [uploadError, setUploadError] = useState(null);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setSelectedImage(file);
-      setPreviewImage(URL.createObjectURL(file)); 
+      setPreviewImage(URL.createObjectURL(file));
     }
   };
 
   const handleImageUpload = async (e) => {
     e.preventDefault();
   
-    // Check if user is authenticated
     const auth = getAuth();
     const user = auth.currentUser;
     if (!user) {
@@ -30,37 +30,42 @@ const CreatePost = () => {
       return;
     }
   
-    // Validate if file is selected
     if (!selectedImage) {
       alert('Please select an image to upload.');
       return;
     }
   
     setIsUploading(true);
-    setUploadError(null); // Reset previous errors
+    setUploadError(null);
   
     const storage = getStorage();
+    const db = getFirestore();
     const storageRef = ref(storage, 'images/' + selectedImage.name);
   
     try {
-      // Upload image to Firebase Storage
       const snapshot = await uploadBytes(storageRef, selectedImage);
-      
-      // Correct way to get the download URL
       const imageUrl = await getDownloadURL(snapshot.ref);
-      
+  
+      // Save post data (including username and email) to Firestore
+      const postDoc = doc(db, 'posts', snapshot.ref.name); // Save using the image name as the document ID
+      await setDoc(postDoc, {
+        username: user.displayName || user.email.split('@')[0], // Use displayName or part of email as username
+        email: user.email, // Save the user's email
+        imageUrl,
+        datePosted: new Date().toISOString(),
+      });
+  
       console.log('Image uploaded successfully:', imageUrl);
   
-      // Reset states
       setSelectedImage(null);
       setPreviewImage(null);
       alert('Image uploaded successfully!');
     } catch (error) {
       console.error('Image upload failed:', error.message);
-      setUploadError(error.message); // Display error message
+      setUploadError(error.message);
       alert('Image upload failed. Please try again.');
     } finally {
-      setIsUploading(false); // Reset uploading state
+      setIsUploading(false);
     }
   };
   
@@ -68,7 +73,7 @@ const CreatePost = () => {
   const handleCancel = () => {
     setSelectedImage(null);
     setPreviewImage(null);
-    setUploadError(null); // Clear errors when canceled
+    setUploadError(null);
   };
 
   return (
@@ -101,7 +106,7 @@ const CreatePost = () => {
           </div>
         </form>
 
-        {uploadError && <p className="error-message">{uploadError}</p>} {/* Display error if exists */}
+        {uploadError && <p className="error-message">{uploadError}</p>}
       </div>
 
       <div className="profileContent">

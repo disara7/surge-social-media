@@ -4,12 +4,33 @@ import './home.css';
 import Navbar from '../Navbar/Navbar';
 import ProfileOverview from '../Profile/ProfileOverview';
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
+import { getFirestore, doc, getDoc } from 'firebase/firestore'; // Import Firestore functions
+import { auth } from '../../firebase'; // Import Firebase auth configuration
 
 const Home = () => {
   const [posts, setPosts] = useState([]); // State to hold posts with image URLs
+  const [usernames, setUsernames] = useState({}); // Store usernames for each post based on user UID
+
+  // Function to fetch the username based on user UID
+  const fetchUsername = async (userId) => {
+    try {
+      const db = getFirestore();
+      const userDoc = doc(db, 'users', userId); // Assuming you store user info in 'users' collection
+      const docSnap = await getDoc(userDoc);
+
+      if (docSnap.exists()) {
+        return docSnap.data().firstName || 'JohnDoe'; // Return first name or fallback
+      } else {
+        console.error('No user found!');
+        return 'Unknown User';
+      }
+    } catch (error) {
+      console.error('Error fetching username: ', error);
+      return 'Unknown User';
+    }
+  };
 
   useEffect(() => {
-    // Fetch posts from Firebase Storage
     const fetchPosts = async () => {
       try {
         const storage = getStorage();
@@ -20,11 +41,15 @@ const Home = () => {
           imageRefs.items.map(async (itemRef) => {
             try {
               const imageUrl = await getDownloadURL(itemRef); // Get the download URL for each image
+              const userId = itemRef.name.split('_')[0]; // Assuming user UID is part of the image file name
+
+              const username = await fetchUsername(userId); // Fetch username based on UID
+
               return {
                 image: imageUrl,
-                username: 'JohnDoe', // You can dynamically fetch or store this info
+                username: username, // Dynamically fetch and set username
                 datePosted: 'Just now', // You can adjust based on your post data
-                initialLikes: 120 // Example likes count
+                initialLikes: 120, // Example likes count
               };
             } catch (error) {
               console.error('Error fetching image URL:', error);
@@ -41,7 +66,8 @@ const Home = () => {
       }
     };
 
-    fetchPosts(); // Make sure to call the function inside useEffect
+    fetchPosts(); // Call the function inside useEffect to fetch posts
+
   }, []); // Empty array means this will run once on component mount
 
   return (
@@ -53,7 +79,7 @@ const Home = () => {
             <Post
               key={index}
               image={post.image}
-              username={post.username}
+              username={post.username} // Pass dynamic username here
               datePosted={post.datePosted}
               initialLikes={post.initialLikes}
             />
