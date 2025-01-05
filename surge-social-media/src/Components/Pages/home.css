@@ -6,9 +6,15 @@
   
 .content {
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
   justify-content: space-between;
   padding: 20px;
+}
+
+.sorting{
+  display: flex;
+  gap: 1rem;
 }
   
 .posts {
