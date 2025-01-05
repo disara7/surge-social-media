@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { signInUser, createUser, saveUserData } from './firebaseUtils'; 
 import FormFields from './formFields'; 
 import ToggleForm from './ToggleForm'; 
-import ReCAPTCHA from 'react-google-recaptcha'; // Import the CAPTCHA component
+import ReCAPTCHA from 'react-google-recaptcha'; 
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -16,7 +16,7 @@ const Login = () => {
   const [lastName, setLastName] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [captchaValue, setCaptchaValue] = useState(null); // Store the CAPTCHA value
+  const [captchaValue, setCaptchaValue] = useState(null); 
   const navigate = useNavigate();
 
   const toggleForm = () => {
@@ -35,11 +35,11 @@ const Login = () => {
       return;
     }
 
-    // Append a dummy domain if the email does not contain '@'
+    // Add the dummy domain if the email does not contain '@'
     const processedEmail = email.includes('@') ? email : `${email}@example.com`;
 
     if (isLogin) {
-      // Login logic
+      // Login 
       try {
         await signInUser(processedEmail, password);
         setSuccessMessage("Login successful");
@@ -48,7 +48,7 @@ const Login = () => {
         setErrorMessage("Login failed: " + error.message);
       }
     } else {
-      // Sign Up logic
+      // Sign Up 
       if (password !== confirmPassword) {
         setErrorMessage("Passwords don't match");
         return;
@@ -115,7 +115,7 @@ const Login = () => {
         </div>
       </div>
       <div className="bottom">
-      <p>Surge SE Internship - January 2025 | Disara </p>
+      <p>Surge SE Internship - January 2025 | Disara Mapalagama</p>
       </div>
     </div>
   );

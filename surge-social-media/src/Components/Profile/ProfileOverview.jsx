@@ -3,8 +3,8 @@ import './ProfileOverview.css';
 import pp from '../../assets/pp.png';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../firebase'; // Import Firebase auth configuration
-import { getFirestore, doc, getDoc } from 'firebase/firestore'; // Import Firestore functions
+import { auth } from '../../firebase'; 
+import { getFirestore, doc, getDoc } from 'firebase/firestore'; 
 
 const ProfileOverview = () => {
   const navigate = useNavigate(); // Initialize useNavigate hook
@@ -21,7 +21,7 @@ const ProfileOverview = () => {
         if (user) {
           // Fetch additional user data from Firestore
           const db = getFirestore();
-          const userDoc = doc(db, 'users', user.uid); // Assuming the user data is stored under 'users' collection
+          const userDoc = doc(db, 'users', user.uid); 
           const docSnap = await getDoc(userDoc);
 
           if (docSnap.exists()) {
@@ -45,7 +45,7 @@ const ProfileOverview = () => {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth); // Log the user out
+      await signOut(auth); // Logout
       console.log('User logged out successfully');
       navigate('/login'); // Redirect to the login page
     } catch (error) {

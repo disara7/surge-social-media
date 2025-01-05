@@ -57,7 +57,7 @@ const CreatePost = () => {
         email: user.email,
         imageUrl,
         datePosted,  // Store Firestore Timestamp
-        likes: 0,  // Initialize likes
+        likes: 0,  
       });
 
       console.log('Image uploaded successfully:', imageUrl);

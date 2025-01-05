@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import './landing.css'
 import logo from '../../assets/surge_logo.png'
 
-
 const Landing = () => {
   const navigate = useNavigate(); 
 

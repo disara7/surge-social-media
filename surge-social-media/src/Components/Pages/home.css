@@ -1,61 +1,53 @@
 .home {
-    display: flex;
-    height: 100vh;
-    background-color: white;
-  }
+  display: flex;
+  height: 100vh;
+  background-color: white;
+}
   
+.content {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  padding: 20px;
+}
+  
+.posts {
+  flex-grow: 2;
+  /* background-color: grey; */
+  padding: 10px;
+  margin-right: 20px;
+  max-height: 100vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min-content; 
+  max-width: 75%; 
+  box-sizing: border-box; 
+}
 
-  .content {
-    display: flex;
-    flex-grow: 1;
-    justify-content: space-between;
-    padding: 20px;
-  }
-  
-  /* Posts section: scrollable area in the middle */
-  .posts {
-    flex-grow: 2;
-    /* background-color: grey; */
-    padding: 10px;
-    margin-right: 20px;
-    max-height: 100vh;
-    overflow-y: auto;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: min-content; /* Adjust width to fit content */
-    max-width: 75%; /* Ensure it doesn't overflow the parent container */
-    box-sizing: border-box; /* Include padding in the width calculation */
-  }
-  
-  
-  
+.profile {
+  width: 250px;
+}
 
+.profileOverview {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
   
-  /* Profile section on the right */
-  .profile {
-    width: 250px;
-  }
-  
-  .profileOverview {
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Optional: Scrollbar styling for posts */
-  .posts::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  .posts::-webkit-scrollbar-thumb {
-    background-color: white;
-    border-radius: 10px;
-  }
-  
-  .posts::-webkit-scrollbar-thumb:hover {
-    background-color: #b5b5b5;
-  }
+.posts::-webkit-scrollbar {
+  width: 6px;
+}
+
+.posts::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 10px;
+}
+
+.posts::-webkit-scrollbar-thumb:hover {
+  background-color: #b5b5b5;
+}
   

@@ -1,14 +1,14 @@
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export const uploadImageToFirebase = async (file) => {
-    const storage = getStorage(); // Get Firebase Storage reference
-    const storageRef = ref(storage, 'images/' + file.name); // Create a reference for the file in Firebase Storage
+    const storage = getStorage(); 
+    const storageRef = ref(storage, 'images/' + file.name); 
   
     try {
-      // Upload the file
+      // Upload file
       const snapshot = await uploadBytes(storageRef, file);
   
-      // Get the download URL after the upload
+      // Get the download URL after upload
       const downloadURL = await getDownloadURL(snapshot.ref);
       
       return downloadURL; // Return the URL of the uploaded image

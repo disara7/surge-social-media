@@ -34,7 +34,7 @@ const Navbar = () => {
         <FaCog size={24} className="icon" />
         <span className="text">Settings</span>
       </div>
-      {/* Create Post Button */}
+      
       <div className="navItem createPost" onClick={handleCreatePost}>
         <FaPlus size={24} className="icon" />
         <span className="text">Create Post</span>

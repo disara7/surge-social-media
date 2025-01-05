@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiOutlinePlus } from 'react-icons/ai'; // Importing the plus icon
+import { AiOutlinePlus } from 'react-icons/ai'; 
 
 const FormFields = ({
   isLogin,
@@ -45,7 +45,7 @@ const FormFields = ({
       <div className="input-group">
         <label>Email / Username</label>
         <input
-          type="text" // Changed from 'email' to 'text'
+          type="text" 
           placeholder="Enter your email or username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -79,14 +79,14 @@ const FormFields = ({
           <div className="input-group pic">
             <label>Profile Picture</label>
             <label htmlFor="profile-upload" className="file-upload-button">
-              <AiOutlinePlus size={30} /> {/* Plus icon */}
+              <AiOutlinePlus size={30} /> 
             </label>
             <input
               type="file"
               id="profile-upload"
               accept="image/*"
               onChange={(e) => setProfilePicture(e.target.files[0])}
-              style={{ display: 'none' }} // Hide the default file input
+              style={{ display: 'none' }} 
             />
             {profilePicture && <p>{profilePicture.name}</p>}
           </div>

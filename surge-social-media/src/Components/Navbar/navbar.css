@@ -1,47 +1,45 @@
-/* styles.css */
-
 .navbar {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 250px;
-    background-color: #ff3841;
-    padding: 10px;
-    height: 100vh;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 250px;
+  background-color: #ff3841;
+  padding: 10px;
+  height: 100vh;
+}
   
-  .navItem {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    color: white;
-    width: 100%;
-    cursor: pointer;
-  }
+.navItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: white;
+  width: 100%;
+  cursor: pointer;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.text {
+  font-size: 16px;
+}
   
-  .icon {
-    margin-right: 10px;
-  }
+.navItem.createPost {
+  background-color: white; 
+  color: #ff3841;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.navItem.createPost .icon {
+  margin-right: 8px;
+}
   
-  .text {
-    font-size: 16px;
-  }
-  
-  .navItem.createPost {
-    background-color: white; /* Green background */
-    color: #ff3841;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px;
-    cursor: pointer;
-  }
-  
-  .navItem.createPost .icon {
-    margin-right: 8px;
-  }
-  
-  .navItem.createPost:hover {
-    background-color: #b82e35;
-    color: white;
-  }
+.navItem.createPost:hover {
+  background-color: #b82e35;
+  color: white;
+}
   

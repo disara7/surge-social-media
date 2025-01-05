@@ -4,18 +4,17 @@ import './home.css';
 import Navbar from '../Navbar/Navbar';
 import ProfileOverview from '../Profile/ProfileOverview';
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
-import { getFirestore, doc, getDoc } from 'firebase/firestore'; // Import Firestore functions
+import { getFirestore, doc, getDoc } from 'firebase/firestore'; 
 
 
 const Home = () => {
   const [posts, setPosts] = useState([]); // State to hold posts with image URLs
   
-
   // Function to fetch the username based on user UID
   const fetchUsername = async (userId) => {
     try {
       const db = getFirestore();
-      const userDoc = doc(db, 'users', userId); // Assuming you store user info in 'users' collection
+      const userDoc = doc(db, 'users', userId); // Using user info in 'users' collection
       const docSnap = await getDoc(userDoc);
 
       if (docSnap.exists()) {
@@ -41,15 +40,15 @@ const Home = () => {
           imageRefs.items.map(async (itemRef) => {
             try {
               const imageUrl = await getDownloadURL(itemRef); // Get the download URL for each image
-              const userId = itemRef.name.split('_')[0]; // Assuming user UID is part of the image file name
+              const userId = itemRef.name.split('_')[0]; // UID is part of the image file name
 
               const username = await fetchUsername(userId); // Fetch username based on UID
 
               return {
                 image: imageUrl,
                 username: username, // Dynamically fetch and set username
-                datePosted: 'Just now', // You can adjust based on your post data
-                initialLikes: 120, // Example likes count
+                datePosted: 'Just now', 
+                initialLikes: 20, 
               };
             } catch (error) {
               console.error('Error fetching image URL:', error);
@@ -66,7 +65,7 @@ const Home = () => {
       }
     };
 
-    fetchPosts(); // Call the function inside useEffect to fetch posts
+    fetchPosts(); 
 
   }, []); // Empty array means this will run once on component mount
 
@@ -79,7 +78,7 @@ const Home = () => {
             <Post
               key={index}
               image={post.image}
-              username={post.username} // Pass dynamic username here
+              username={post.username} 
               datePosted={post.datePosted}
               initialLikes={post.initialLikes}
             />

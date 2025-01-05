@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaHeart } from 'react-icons/fa';
 import { formatDistanceToNow } from 'date-fns';
-import { Timestamp } from 'firebase/firestore';  // Import Timestamp
+import { Timestamp } from 'firebase/firestore'; 
 import './post.css';
 
 const Post = ({ image, username, datePosted, initialLikes }) => {

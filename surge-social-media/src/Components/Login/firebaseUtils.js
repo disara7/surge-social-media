@@ -29,8 +29,10 @@ export const uploadProfilePicture = async (file, userId) => {
     }, { merge: true });
 
     console.log("Profile picture uploaded and Firestore updated!");
+
   } catch (error) {
     console.error("Error uploading profile picture: ", error);
+    
     throw error;
   }
 };

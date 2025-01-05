@@ -1,4 +1,3 @@
-// ToggleForm.js
 import React from 'react';
 
 const ToggleForm = ({ isLogin, toggleForm }) => (
