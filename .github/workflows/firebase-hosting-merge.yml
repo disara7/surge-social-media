@@ -17,12 +17,12 @@ jobs:
 
       # Install dependencies
       - run: |
-          cd surge-social-media/surge-social-media
+          cd surge-social-media
           npm install
 
       # Build the project
       - run: |
-          cd surge-social-media/surge-social-media
+          cd surge-social-media
           npm run build
 
       # Deploy to Firebase Hosting
