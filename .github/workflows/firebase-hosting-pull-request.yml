@@ -18,7 +18,7 @@ jobs:
           node-version: '20.5'
 
       # Navigate to the correct directory
-      - run: cd surge-social-media/surge-social-media
+      - run: cd \surge-social-media
 
       # Install dependencies
       - run: npm install
