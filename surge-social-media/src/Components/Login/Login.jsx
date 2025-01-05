@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { signInUser, createUser, saveUserData } from './firebaseUtils'; 
 import FormFields from './formFields'; 
 import ToggleForm from './ToggleForm'; 
+import ReCAPTCHA from 'react-google-recaptcha'; // Import the CAPTCHA component
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -15,18 +16,28 @@ const Login = () => {
   const [lastName, setLastName] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [captchaValue, setCaptchaValue] = useState(null); // Store the CAPTCHA value
   const navigate = useNavigate();
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
   };
 
+  const handleCaptchaChange = (value) => {
+    setCaptchaValue(value); // Update the CAPTCHA value
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
+    if (!captchaValue) {
+      setErrorMessage("Please complete the CAPTCHA");
+      return;
+    }
+
     // Append a dummy domain if the email does not contain '@'
     const processedEmail = email.includes('@') ? email : `${email}@example.com`;
-  
+
     if (isLogin) {
       // Login logic
       try {
@@ -42,7 +53,7 @@ const Login = () => {
         setErrorMessage("Passwords don't match");
         return;
       }
-  
+
       try {
         const user = await createUser(processedEmail, password);
         const userData = {
@@ -52,10 +63,10 @@ const Login = () => {
           picture: "",
           createdAt: new Date(),
         };
-  
+
         await saveUserData(user.uid, userData);
         setSuccessMessage("User created and data saved to Firestore!");
-  
+
         // Navigate to the login form after sign-up
         setTimeout(() => {
           toggleForm();
@@ -65,7 +76,6 @@ const Login = () => {
       }
     }
   };
-  
 
   return (
     <div className="login">
@@ -87,6 +97,12 @@ const Login = () => {
               confirmPassword={confirmPassword} 
               setConfirmPassword={setConfirmPassword} 
             />
+            <div className="captcha-container">
+              <ReCAPTCHA
+                sitekey={process.env.REACT_APP_GOOGLE_RECAPTCHA_SITE_KEY}
+                onChange={handleCaptchaChange} 
+              />
+            </div>
             <button type="submit" className="auth-button">
               {isLogin ? 'Login' : 'Sign Up'}
             </button>

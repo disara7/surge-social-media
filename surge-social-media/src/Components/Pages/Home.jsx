@@ -5,11 +5,11 @@ import Navbar from '../Navbar/Navbar';
 import ProfileOverview from '../Profile/ProfileOverview';
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import { getFirestore, doc, getDoc } from 'firebase/firestore'; // Import Firestore functions
-import { auth } from '../../firebase'; // Import Firebase auth configuration
+
 
 const Home = () => {
   const [posts, setPosts] = useState([]); // State to hold posts with image URLs
-  const [usernames, setUsernames] = useState({}); // Store usernames for each post based on user UID
+  
 
   // Function to fetch the username based on user UID
   const fetchUsername = async (userId) => {
