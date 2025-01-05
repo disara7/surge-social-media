@@ -17,6 +17,9 @@ const Landing = () => {
       <button className='cont-button' onClick={handleLoginClick}>
         TAP TO CONTINUE
       </button>
+      <div className="bottom-line">
+      <p>Surge SE Internship - January 2025 | Disara Mapalagama</p>
+      </div>
     </div>
   );
 };
