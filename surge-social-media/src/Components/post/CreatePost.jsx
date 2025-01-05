@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import Navbar from '../Navbar/Navbar';
-import './CreatePost.css';
 import { getAuth } from 'firebase/auth';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
+import './CreatePost.css';
+import Navbar from '../Navbar/Navbar';
 import ProfileOverview from '../Profile/ProfileOverview';
 
 const CreatePost = () => {
@@ -22,41 +23,45 @@ const CreatePost = () => {
 
   const handleImageUpload = async (e) => {
     e.preventDefault();
-  
+
     const auth = getAuth();
     const user = auth.currentUser;
     if (!user) {
       alert('You must be logged in to upload an image.');
       return;
     }
-  
+
     if (!selectedImage) {
       alert('Please select an image to upload.');
       return;
     }
-  
+
     setIsUploading(true);
     setUploadError(null);
-  
+
     const storage = getStorage();
     const db = getFirestore();
     const storageRef = ref(storage, 'images/' + selectedImage.name);
-  
+
     try {
       const snapshot = await uploadBytes(storageRef, selectedImage);
       const imageUrl = await getDownloadURL(snapshot.ref);
-  
+
+      // Get current date as a Firestore Timestamp
+      const datePosted = Timestamp.now();  // Using Firestore Timestamp
+
       // Save post data (including username and email) to Firestore
-      const postDoc = doc(db, 'posts', snapshot.ref.name); // Save using the image name as the document ID
+      const postDoc = doc(db, 'posts', snapshot.ref.name);  // Use image name as doc ID
       await setDoc(postDoc, {
-        username: user.displayName || user.email.split('@')[0], // Use displayName or part of email as username
-        email: user.email, // Save the user's email
+        username: user.displayName || user.email.split('@')[0],
+        email: user.email,
         imageUrl,
-        datePosted: new Date().toISOString(),
+        datePosted,  // Store Firestore Timestamp
+        likes: 0,  // Initialize likes
       });
-  
+
       console.log('Image uploaded successfully:', imageUrl);
-  
+
       setSelectedImage(null);
       setPreviewImage(null);
       alert('Image uploaded successfully!');
@@ -68,7 +73,6 @@ const CreatePost = () => {
       setIsUploading(false);
     }
   };
-  
 
   const handleCancel = () => {
     setSelectedImage(null);
@@ -78,40 +82,41 @@ const CreatePost = () => {
 
   return (
     <div className="createPost">
-      <Navbar />
+      <Navbar/>
       <div className="creator">
-        <h2 className="subheading">Upload a Photo</h2>
-        <form onSubmit={handleImageUpload}>
-          <label className="file-upload-label">
-            {previewImage ? (
-              <img src={previewImage} alt="Preview" className="image-preview" />
-            ) : (
-              <span className="placeholder">Click to choose a photo</span>
-            )}
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              style={{ display: 'none' }}
-            />
-          </label>
+      <h2 className="subheading">Upload a Photo</h2>
+      <form onSubmit={handleImageUpload}>
+        <label className="file-upload-label">
+          {previewImage ? (
+            <img src={previewImage} alt="Preview" className="image-preview" />
+          ) : (
+            <span className="placeholder">Click to choose a photo</span>
+          )}
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            style={{ display: 'none' }}
+          />
+        </label>
 
-          <div className="button-group">
-            <button type="submit" disabled={isUploading}>
-              {isUploading ? 'Uploading...' : 'Upload'}
-            </button>
-            <button type="button" onClick={handleCancel} className="cancel-button">
-              Cancel
-            </button>
-          </div>
-        </form>
+        <div className="button-group">
+          <button type="submit" disabled={isUploading}>
+            {isUploading ? 'Uploading...' : 'Upload'}
+          </button>
+          <button type="button" onClick={handleCancel} className="cancel-button">
+            Cancel
+          </button>
+        </div>
+      </form>
 
-        {uploadError && <p className="error-message">{uploadError}</p>}
+      {uploadError && <p className="error-message">{uploadError}</p>}
+
       </div>
-
       <div className="profileContent">
         <ProfileOverview />
       </div>
+      
     </div>
   );
 };

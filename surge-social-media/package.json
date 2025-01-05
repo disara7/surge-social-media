@@ -7,6 +7,7 @@
     "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
     "@material-tailwind/react": "^2.1.10",
     "cra-template": "1.2.0",
+    "date-fns": "^4.1.0",
     "feather-icons": "^4.29.2",
     "firebase": "^11.1.0",
     "formik": "^2.4.6",

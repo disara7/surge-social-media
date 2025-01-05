@@ -114,6 +114,9 @@ const Login = () => {
           <ToggleForm isLogin={isLogin} toggleForm={toggleForm} />
         </div>
       </div>
+      <div className="bottom">
+      <p>Surge SE Internship - January 2025 | Disara </p>
+      </div>
     </div>
   );
 };
