@@ -32,4 +32,4 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SURGE_SOCIAL_MEDIA }}
           projectId: surge-social-media
-          entryPoint: surge-social-media/firebase.json
+          entryPoint: surge-social-media

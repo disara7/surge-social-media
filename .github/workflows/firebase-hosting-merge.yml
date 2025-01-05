@@ -32,4 +32,4 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SURGE_SOCIAL_MEDIA }}
           channelId: live
           projectId: surge-social-media
-          entryPoint: surge-social-media/firebase.json
+          entryPoint: surge-social-media
