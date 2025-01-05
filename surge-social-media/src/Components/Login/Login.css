@@ -151,6 +151,64 @@ h2 {
   margin-top: 5px;
 }
 
+.file-upload-button {
+  background-color: #ff5e57;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1.3rem;
+  height: min-content;
+}
+
+.profile-preview-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.profile-preview {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.profile-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.remove-button {
+  background-color: #ff5e57;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  height: min-content;
+}
+
+.remove-button:hover {
+  background-color: #ff3b3b;
+}
+
+.file-name {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
 .bottom{
   position: fixed;
   bottom: 0;
@@ -158,3 +216,12 @@ h2 {
   font-size: small;
   margin-bottom: 0.2rem;
 }
+
+.form-fields{
+  display: flex;
+}
+
+.left{
+  margin-right: 2rem;
+}
+

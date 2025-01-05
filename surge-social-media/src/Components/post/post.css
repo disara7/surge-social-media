@@ -12,46 +12,58 @@
   height: fit-content;
 }
   
-.postImage {
+.post-image {
   width: 100%;
   height: auto;
   border-radius: 8px;
 }
 
-.postDetails {
+.post-footer {
   margin-top: 10px;
+  display: flex;
+  justify-content: space-between; /* Ensure space between items */
+  align-items: center;
 }
 
-.postHeader {
+.post-header {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 8px;
+}
+
+.heart-icon {
+  color: gray; /* Default color for the heart */
+  cursor: pointer;
+  transition: color 0.3s ease; /* Smooth color transition */
+  font-size: 1.5em; /* Increase heart size */
+}
+
+.heart-icon.liked {
+  color: red; /* Red color for filled heart when liked */
+}
+
+.likes {
   font-size: 14px;
   color: #555;
+  margin-left: 8px;
+}
+
+.post-info {
+  display: flex;
+  justify-content: flex-start;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #888;
+  align-items: center;
+  gap: 8rem;
 }
 
 .username {
   font-weight: bold;
 }
 
-.date {
+.date-posted {
   font-style: italic;
-}
-
-.postFooter {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.likeSection {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  font-size: 14px;
-  color: #555;
-}
-
-.likeSection span {
-  margin-left: 5px;
 }
   

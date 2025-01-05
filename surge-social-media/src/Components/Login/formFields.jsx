@@ -1,5 +1,5 @@
-import React from 'react';
-import { AiOutlinePlus } from 'react-icons/ai'; 
+import React, { useState } from 'react';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 const FormFields = ({
   isLogin,
@@ -14,10 +14,26 @@ const FormFields = ({
   confirmPassword,
   setConfirmPassword,
   setProfilePicture,
-  profilePicture
+  profilePicture,
 }) => {
+  const [preview, setPreview] = useState(null);
+
+  const handleProfilePictureChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfilePicture(file);
+      setPreview(URL.createObjectURL(file)); // Create a preview URL for the image
+    }
+  };
+
+  const handleRemoveProfilePicture = () => {
+    setProfilePicture(null); // Clear the selected profile picture
+    setPreview(null); // Clear the preview
+  };
+
   return (
-    <>
+    <div className="form-fields">
+      <div className="left">
       {!isLogin && (
         <div className="name-inputs">
           <div className="input-group">
@@ -45,7 +61,7 @@ const FormFields = ({
       <div className="input-group">
         <label>Email / Username</label>
         <input
-          type="text" 
+          type="text"
           placeholder="Enter your email or username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -74,25 +90,51 @@ const FormFields = ({
           />
         </div>
       </div>
+      </div>
+      <div className="righ">
       {!isLogin && (
-        <>
-          <div className="input-group pic">
-            <label>Profile Picture</label>
-            <label htmlFor="profile-upload" className="file-upload-button">
-              <AiOutlinePlus size={30} /> 
-            </label>
-            <input
-              type="file"
-              id="profile-upload"
-              accept="image/*"
-              onChange={(e) => setProfilePicture(e.target.files[0])}
-              style={{ display: 'none' }} 
-            />
-            {profilePicture && <p>{profilePicture.name}</p>}
-          </div>
-        </>
+        <div className="input-group profile-pic-group">
+          <label>Profile Picture</label>
+          {!preview ? (
+            <>
+              <label htmlFor="profile-upload" className="file-upload-button">
+                <AiOutlinePlus size={30} />
+              </label>
+              <input
+                type="file"
+                id="profile-upload"
+                accept="image/*"
+                onChange={handleProfilePictureChange}
+                style={{ display: 'none' }}
+              />
+            </>
+          ) : (
+            <div className="profile-preview-container">
+              <div className="profile-preview">
+                <img src={preview} alt="Profile Preview" />
+              </div>
+              <div className="profile-actions">
+                <button className="remove-button" onClick={handleRemoveProfilePicture}>
+                  Remove
+                </button>
+                <label htmlFor="profile-upload" className="file-upload-button">
+                  Change
+                </label>
+                <input
+                  type="file"
+                  id="profile-upload"
+                  accept="image/*"
+                  onChange={handleProfilePictureChange}
+                  style={{ display: 'none' }}
+                />
+              </div>
+            </div>
+          )}
+          {profilePicture && <p className="file-name">{profilePicture.name}</p>}
+        </div>
       )}
-    </>
+      </div>
+    </div>
   );
 };
 

@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import './Login.css';
 import surgeLogo from '../../assets/surge_logo.png';
 import { useNavigate } from 'react-router-dom';
-import { signInUser, createUser, saveUserData } from './firebaseUtils'; 
-import FormFields from './formFields'; 
-import ToggleForm from './ToggleForm'; 
-import ReCAPTCHA from 'react-google-recaptcha'; 
+import { signInUser, createUser, saveUserData } from './firebaseUtils';
+import FormFields from './formFields';
+import ToggleForm from './ToggleForm';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -14,9 +15,11 @@ const Login = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [profilePicture, setProfilePicture] = useState(null); // For profile picture
+  const [username, setUsername] = useState(''); // New state for username
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [captchaValue, setCaptchaValue] = useState(null); 
+  const [captchaValue, setCaptchaValue] = useState(null);
   const navigate = useNavigate();
 
   const toggleForm = () => {
@@ -24,31 +27,30 @@ const Login = () => {
   };
 
   const handleCaptchaChange = (value) => {
-    setCaptchaValue(value); // Update the CAPTCHA value
+    setCaptchaValue(value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!captchaValue) {
-      setErrorMessage("Please complete the CAPTCHA");
+      setErrorMessage('Please complete the CAPTCHA');
       return;
     }
 
-    // Add the dummy domain if the email does not contain '@'
     const processedEmail = email.includes('@') ? email : `${email}@example.com`;
 
     if (isLogin) {
-      // Login 
+      // Login
       try {
         await signInUser(processedEmail, password);
-        setSuccessMessage("Login successful");
+        setSuccessMessage('Login successful');
         navigate('/home');
       } catch (error) {
-        setErrorMessage("Login failed: " + error.message);
+        setErrorMessage('Login failed: ' + error.message);
       }
     } else {
-      // Sign Up 
+      // Sign Up
       if (password !== confirmPassword) {
         setErrorMessage("Passwords don't match");
         return;
@@ -56,23 +58,30 @@ const Login = () => {
 
       try {
         const user = await createUser(processedEmail, password);
+
+        let profilePictureUrl = '';
+        if (profilePicture) {
+          // Upload profile picture to Firebase Storage
+          const storage = getStorage();
+          const pictureRef = ref(storage, `profilePictures/${profilePicture.name}`);
+          await uploadBytes(pictureRef, profilePicture);
+          profilePictureUrl = await getDownloadURL(pictureRef);
+        }
+
         const userData = {
           email: processedEmail,
-          firstName: firstName,
-          lastName: lastName,
-          picture: "",
+          firstName,
+          lastName,
+          username: username || `${firstName} ${lastName}`, // Use username if provided, otherwise combine first and last name
+          picture: profilePictureUrl,
           createdAt: new Date(),
         };
 
         await saveUserData(user.uid, userData);
-        setSuccessMessage("User created and data saved to Firestore!");
-
-        // Navigate to the login form after sign-up
-        setTimeout(() => {
-          toggleForm();
-        }, 2000);
+        setSuccessMessage('User created and data saved to Firestore!');
+        setTimeout(() => toggleForm(), 2000);
       } catch (error) {
-        setErrorMessage("Signup failed: " + error.message);
+        setErrorMessage('Signup failed: ' + error.message);
       }
     }
   };
@@ -84,23 +93,27 @@ const Login = () => {
         <div className="form-container">
           <h2>{isLogin ? 'Login to Continue' : 'Create an Account'}</h2>
           <form className="auth-form" onSubmit={handleSubmit}>
-            <FormFields 
-              isLogin={isLogin} 
-              firstName={firstName} 
-              setFirstName={setFirstName} 
-              lastName={lastName} 
-              setLastName={setLastName} 
-              email={email} 
-              setEmail={setEmail} 
-              password={password} 
-              setPassword={setPassword} 
-              confirmPassword={confirmPassword} 
-              setConfirmPassword={setConfirmPassword} 
+            <FormFields
+              isLogin={isLogin}
+              firstName={firstName}
+              setFirstName={setFirstName}
+              lastName={lastName}
+              setLastName={setLastName}
+              email={email}
+              setEmail={setEmail}
+              password={password}
+              setPassword={setPassword}
+              confirmPassword={confirmPassword}
+              setConfirmPassword={setConfirmPassword}
+              profilePicture={profilePicture} // Added for profile picture
+              setProfilePicture={setProfilePicture} // Added for profile picture
+              username={username} // Added for username input
+              setUsername={setUsername} // Added for username input
             />
             <div className="captcha-container">
               <ReCAPTCHA
                 sitekey={process.env.REACT_APP_GOOGLE_RECAPTCHA_SITE_KEY}
-                onChange={handleCaptchaChange} 
+                onChange={handleCaptchaChange}
               />
             </div>
             <button type="submit" className="auth-button">
@@ -115,7 +128,7 @@ const Login = () => {
         </div>
       </div>
       <div className="bottom">
-      <p>Surge SE Internship - January 2025 | Disara Mapalagama</p>
+        <p>Surge SE Internship - January 2025 | Disara Mapalagama</p>
       </div>
     </div>
   );

@@ -6,12 +6,14 @@ import { Timestamp } from 'firebase/firestore';
 import './CreatePost.css';
 import Navbar from '../Navbar/Navbar';
 import ProfileOverview from '../Profile/ProfileOverview';
+import Post from './post';
 
 const CreatePost = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
+  const [postDetails, setPostDetails] = useState(null); // State to hold post details after upload
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -62,6 +64,14 @@ const CreatePost = () => {
 
       console.log('Image uploaded successfully:', imageUrl);
 
+      // Save post details for display
+      setPostDetails({
+        image: imageUrl,
+        username: user.displayName || user.email.split('@')[0],
+        datePosted,
+        initialLikes: 0,
+      });
+
       setSelectedImage(null);
       setPreviewImage(null);
       alert('Image uploaded successfully!');
@@ -82,41 +92,42 @@ const CreatePost = () => {
 
   return (
     <div className="createPost">
-      <Navbar/>
+      <Navbar />
       <div className="creator">
-      <h2 className="subheading">Upload a Photo</h2>
-      <form onSubmit={handleImageUpload}>
-        <label className="file-upload-label">
-          {previewImage ? (
-            <img src={previewImage} alt="Preview" className="image-preview" />
-          ) : (
-            <span className="placeholder">Click to choose a photo</span>
-          )}
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            style={{ display: 'none' }}
-          />
-        </label>
+        <h2 className="subheading">Upload a Photo</h2>
+        <form onSubmit={handleImageUpload}>
+          <label className="file-upload-label">
+            {previewImage ? (
+              <img src={previewImage} alt="Preview" className="image-preview" />
+            ) : (
+              <span className="placeholder">Click to choose a photo</span>
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              style={{ display: 'none' }}
+            />
+          </label>
 
-        <div className="button-group">
-          <button type="submit" disabled={isUploading}>
-            {isUploading ? 'Uploading...' : 'Upload'}
-          </button>
-          <button type="button" onClick={handleCancel} className="cancel-button">
-            Cancel
-          </button>
-        </div>
-      </form>
+          <div className="button-group">
+            <button type="submit" disabled={isUploading}>
+              {isUploading ? 'Uploading...' : 'Upload'}
+            </button>
+            <button type="button" onClick={handleCancel} className="cancel-button">
+              Cancel
+            </button>
+          </div>
+        </form>
 
-      {uploadError && <p className="error-message">{uploadError}</p>}
-
+        {uploadError && <p className="error-message">{uploadError}</p>}
       </div>
+      
       <div className="profileContent">
         <ProfileOverview />
       </div>
-      
+
+      {postDetails && <Post {...postDetails} />} {/* Pass post details to the Post component */}
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './ProfileOverview.css';
-import pp from '../../assets/pp.png';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase'; 
@@ -12,6 +11,7 @@ const ProfileOverview = () => {
     firstName: '',
     lastName: '',
     email: '',
+    picture: '', // To hold the profile picture URL
   }); // State to hold user data
 
   useEffect(() => {
@@ -30,6 +30,7 @@ const ProfileOverview = () => {
               firstName: data.firstName || 'FirstName',
               lastName: data.lastName || 'LastName',
               email: user.email || 'Email',
+              picture: data.picture || '', // Set the picture from Firestore
             });
           } else {
             console.error('No such document!');
@@ -61,7 +62,11 @@ const ProfileOverview = () => {
   return (
     <div className="profileOverview">
       <div className="profileImageContainer">
-        <img src={pp} alt="Profile" className="profileImage" />
+        <img 
+          src={userData.picture || 'https://via.placeholder.com/150'} 
+          alt="Profile" 
+          className="profileImage" 
+        />
       </div>
       <h3>
         {userData.firstName} {userData.lastName}
