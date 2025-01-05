@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { FaHeart, FaRegHeart } from 'react-icons/fa'; // Import both filled and regular heart icons
 import './post.css';
@@ -9,7 +9,7 @@ const Post = ({ postId }) => {
   const [likes, setLikes] = useState(0); // Track the number of likes
 
   // Function to fetch the username and other post data based on postId
-  const fetchPostData = async () => {
+  const fetchPostData = useCallback(async () => {
     try {
       const db = getFirestore();
       const postDoc = doc(db, 'posts', postId); // Fetch post data from 'posts' collection using postId
@@ -36,11 +36,11 @@ const Post = ({ postId }) => {
     } catch (error) {
       console.error('Error fetching post data:', error);
     }
-  };
+  }, [postId]);
 
   useEffect(() => {
     fetchPostData();
-  }, [postId]);
+  }, [postId, fetchPostData]); // Use useEffect to call fetchPostData when postId changes
 
   // Handle like button click
   const handleLikeClick = () => {

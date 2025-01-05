@@ -27,7 +27,10 @@ const Home = () => {
 
         // Fetch post data from Firestore (including likes and datePosted)
         const postsSnapshot = await getDocs(postQuery);
-        const postList = postsSnapshot.docs.map(doc => doc.data());
+        const postList = postsSnapshot.docs.map(doc => ({
+          id: doc.id,  // Include Firestore document ID
+          ...doc.data(),
+        }));
 
         setPosts(postList); // Set post metadata
 
@@ -61,8 +64,12 @@ const Home = () => {
           <button onClick={() => setSortCriteria('likes')}>Sort by Likes</button>
         </div>
         <div className="posts">
-          {posts.map((post, index) => (
-            <Post key={index} postId={post.imageUrl} imageUrl={imageUrls[post.imageUrl]} /> 
+          {posts.map((post) => (
+            <Post 
+              key={post.id} 
+              postId={post.id} 
+              imageUrl={imageUrls[post.imageUrl]} // Make sure the imageUrl corresponds to Firebase Storage
+            />
           ))}
         </div>
       </div>
