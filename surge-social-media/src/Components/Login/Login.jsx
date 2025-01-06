@@ -115,6 +115,9 @@ const Login = () => {
                 sitekey={process.env.REACT_APP_GOOGLE_RECAPTCHA_SITE_KEY}
                 onChange={handleCaptchaChange}
               />
+              {errorMessage === 'Please complete the CAPTCHA' && (
+                <span className="error">{errorMessage}</span>
+              )}
             </div>
             <button type="submit" className="auth-button">
               {isLogin ? 'Login' : 'Sign Up'}
