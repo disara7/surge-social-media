@@ -18,10 +18,15 @@ jobs:
           node-version: '20.5'
 
       # Navigate to the correct directory
-      - run: cd \surge-social-media
+      - run: cd surge-social-media
 
       # Install dependencies
       - run: npm install
+
+      # Run tests
+      - run: npm run test
+        # Fail the workflow if tests fail
+        continue-on-error: false
 
       # Build the project
       - run: npm run build
