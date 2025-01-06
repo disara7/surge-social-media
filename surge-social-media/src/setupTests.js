@@ -1,7 +1,6 @@
-// Import necessary testing libraries and utilities
-import '@testing-library/jest-dom'; // Provides custom jest matchers for DOM elements
+import '@testing-library/jest-dom';
 
-// Mock `matchMedia` for tests (if using any CSS media queries or responsive features)
+// Mock `matchMedia` for tests 
 global.matchMedia = global.matchMedia || function () {
   return {
     matches: false,
@@ -27,4 +26,4 @@ global.console = {
   log: jest.fn(),
 };
 
-// Extend Jest if necessary (e.g., add global utilities, custom matchers, etc.)
+

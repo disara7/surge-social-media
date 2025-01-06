@@ -13,7 +13,7 @@ const CreatePost = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
-  const [postDetails, setPostDetails] = useState(null); // State to hold post details after upload
+  const [postDetails, setPostDetails] = useState(null); 
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];

@@ -17,7 +17,7 @@ const Home = () => {
         const db = getFirestore();
         const postCollectionRef = collection(db, 'posts');
 
-        // Apply Firestore query based on the selected sort criteria
+        // Firestore query based on the selected sort criteria
         let postQuery;
         if (sortCriteria === 'date') {
           postQuery = query(postCollectionRef, orderBy('datePosted', 'desc')); // Sort by date (newest first)

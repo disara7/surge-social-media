@@ -6,7 +6,7 @@ import { auth } from '../../firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore'; 
 
 const ProfileOverview = () => {
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     firstName: '',
     lastName: '',

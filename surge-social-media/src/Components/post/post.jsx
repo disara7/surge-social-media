@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { FaHeart, FaRegHeart } from 'react-icons/fa'; // Import both filled and regular heart icons
+import { FaHeart, FaRegHeart } from 'react-icons/fa'; 
 import './post.css';
 
 const Post = ({ postId }) => {

@@ -1,0 +1,28 @@
+FROM node:16
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json for Firebase functions
+COPY functions/package*.json ./functions/
+
+# Install dependencies
+RUN npm install --prefix /app/functions
+
+# Copy the rest of the Firebase functions code
+COPY functions ./ 
+
+# Copy the Firebase service account key into the container
+COPY secrets/service-account-file.json /app/service-account-file.json
+
+# Copy the firebase.json configuration for Firebase services
+COPY firebase.json /app/firebase.json
+
+# Expose port for Firebase Emulator (default is 5001)
+EXPOSE 5001
+
+# Set environment variable to use the service account file for Firebase Admin SDK
+ENV GOOGLE_APPLICATION_CREDENTIALS="/app/service-account-file.json"
+
+# Start the Firebase functions emulator 
+CMD ["firebase", "emulators:start", "--only", "functions"]

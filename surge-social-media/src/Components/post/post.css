@@ -21,7 +21,7 @@
 .post-footer {
   margin-top: 10px;
   display: flex;
-  justify-content: space-between; /* Ensure space between items */
+  justify-content: space-between; 
   align-items: center;
 }
 
@@ -33,14 +33,14 @@
 }
 
 .heart-icon {
-  color: gray; /* Default color for the heart */
+  color: gray; 
   cursor: pointer;
-  transition: color 0.3s ease; /* Smooth color transition */
-  font-size: 1.5em; /* Increase heart size */
+  transition: color 0.3s ease;
+  font-size: 1.5em; 
 }
 
 .heart-icon.liked {
-  color: red; /* Red color for filled heart when liked */
+  color: red; 
 }
 
 .likes {

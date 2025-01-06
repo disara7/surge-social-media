@@ -1,0 +1,24 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile-react
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile-firebase
+    ports:
+      - "5001:5001"
+    networks:
+      - app-network
+    volumes:
+      - ./functions:/app
+
+networks:
+  app-network:
+    driver: bridge

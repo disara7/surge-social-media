@@ -1,0 +1,31 @@
+FROM node:16 AS build
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json for React app
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the React app
+COPY . .
+
+# Build the React app
+RUN npm run build
+
+# Use Nginx to serve the built React app
+FROM nginx:alpine
+
+# Copy the build folder to Nginx's html folder
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Copy the surge-social-media folder containing firebase.json
+COPY firebase.json /usr/share/nginx/html/firebase.json
+
+# Expose port 80 (default for HTTP)
+EXPOSE 80
+
+# Start Nginx to serve the React app
+CMD ["nginx", "-g", "daemon off;"]

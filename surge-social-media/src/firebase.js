@@ -21,5 +21,5 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app); 
 
-// Export Firebase services for use in other parts of your app
+// Export Firebase services for use in other parts of the app
 export { auth, db, storage };
